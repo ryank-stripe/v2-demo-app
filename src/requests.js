@@ -6,3 +6,12 @@ export const createAccount = {
         "entity_type": "company"
     }
 }
+
+export const addCustomerConfig = {
+    "include": [
+        "configuration.customer"
+    ],
+    "configuration": {
+        "customer": {}
+    }
+}
