@@ -20,7 +20,7 @@ export const postCreateAccount = async (body, token) => {
         });
 }
 
-export const postAddCustomerConfig = async (body, token, accountId) => {
+export const postUpdateAccount = async (body, token, accountId) => {
     return axios.post(`https://api.stripe.com/v2/core/accounts/${accountId}`, body, config(token))
         .then(function (response) {
             return response.data;

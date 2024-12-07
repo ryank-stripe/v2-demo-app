@@ -15,3 +15,25 @@ export const addCustomerConfig = {
         "customer": {}
     }
 }
+
+export const addMerchantConfig = {
+    "include": [
+        "identity","requirements"
+    ],
+    "configuration": {
+        "merchant": {
+            "features": {
+                "card_payments": {
+                    "requested": true
+                }
+            }
+        }
+    },
+    "dashboard": "none",
+    "defaults": {
+        "responsibilities": {
+            "fees_collector": "stripe",
+            "losses_collector": "stripe"
+        }
+    }
+}

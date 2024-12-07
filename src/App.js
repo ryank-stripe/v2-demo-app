@@ -1,5 +1,4 @@
 import './App.css';
-import JSONPretty from 'react-json-pretty';
 
 import {useState} from 'react';
 
@@ -7,8 +6,10 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
-import { createAccount, addCustomerConfig } from './requests';
-import { postCreateAccount, postAddCustomerConfig } from './axios';
+import { createAccount, addCustomerConfig, addMerchantConfig } from './requests';
+import { postCreateAccount, postUpdateAccount } from './axios';
+
+import { ResponseAccordian } from './components/ResponseAccordian';
 
 function App() {
 
@@ -20,6 +21,9 @@ function App() {
 
   const [addCustomerConfigRequest, setAddCustomerConfigRequest] = useState(JSON.stringify(addCustomerConfig, null, 2));
   const [addCustomerConfigResponse, setAddCustomerConfigResponse] = useState({});
+
+  const [addMerchantConfigRequest, setAddMerchantConfigRequest] = useState(JSON.stringify(addMerchantConfig, null, 2));
+  const [addMerchantConfigResponse, setAddMerchantConfigResponse] = useState({});
 
   return (
     <div style={{
@@ -60,8 +64,7 @@ function App() {
       >
         Send
       </Button>
-      <h2>Response</h2>
-      <JSONPretty id="json-pretty" data={createAccountResponse}></JSONPretty>
+      <ResponseAccordian body={createAccountResponse}/>
 
       <h1>Update Account with Customer Config</h1>
 
@@ -82,6 +85,9 @@ function App() {
         fullWidth
         multiline
         rows={15}
+        style={{
+          marginTop: '2rem'
+        }}
         defaultValue={addCustomerConfigRequest}
         onChange={(event) => {
           setAddCustomerConfigRequest(event.target.value);
@@ -91,14 +97,41 @@ function App() {
         variant="contained"
         endIcon={<SendIcon />}
         onClick={async () => {
-          const res = await postAddCustomerConfig(addCustomerConfigRequest, stripeKey, accountId);
+          const res = await postUpdateAccount(addCustomerConfigRequest, stripeKey, accountId);
           setAddCustomerConfigResponse(res);
         }}
       >
         Send
       </Button>
-      <h2>Response</h2>
-      <JSONPretty id="json-pretty" data={addCustomerConfigResponse}></JSONPretty>
+      <ResponseAccordian body={addCustomerConfigResponse}/>
+
+      <h1>Update Account with Merchant Config</h1>
+
+      <TextField
+        id="outlined-multiline-static"
+        label="Multiline"
+        fullWidth
+        multiline
+        rows={15}
+        style={{
+          marginTop: '2rem'
+        }}
+        defaultValue={addMerchantConfigRequest}
+        onChange={(event) => {
+          setAddMerchantConfigRequest(event.target.value);
+        }}
+      />
+      <Button
+        variant="contained"
+        endIcon={<SendIcon />}
+        onClick={async () => {
+          const res = await postUpdateAccount(addMerchantConfigRequest, stripeKey, accountId);
+          setAddMerchantConfigResponse(res);
+        }}
+      >
+        Send
+      </Button>
+      <ResponseAccordian body={addMerchantConfigResponse}/>
     </div>
   );
 }
