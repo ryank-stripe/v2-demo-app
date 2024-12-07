@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
 import { createAccount, addCustomerConfig, addMerchantConfig } from './requests';
-import { postCreateAccount, postUpdateAccount } from './axios';
+import { postCreateAccount, postUpdateAccount, getAccount } from './axios';
 
 import { ResponseAccordian } from './components/ResponseAccordian';
 
@@ -24,6 +24,8 @@ function App() {
 
   const [addMerchantConfigRequest, setAddMerchantConfigRequest] = useState(JSON.stringify(addMerchantConfig, null, 2));
   const [addMerchantConfigResponse, setAddMerchantConfigResponse] = useState({});
+
+  const [getAccountResponse, setGetAccountResponse] = useState({});
 
   return (
     <div style={{
@@ -112,7 +114,7 @@ function App() {
         label="Multiline"
         fullWidth
         multiline
-        rows={15}
+        rows={30}
         style={{
           marginTop: '2rem'
         }}
@@ -132,6 +134,19 @@ function App() {
         Send
       </Button>
       <ResponseAccordian body={addMerchantConfigResponse}/>
+
+      <h1>Get Account Details</h1>
+      <Button
+        variant="contained"
+        endIcon={<SendIcon />}
+        onClick={async () => {
+          const res = await getAccount(stripeKey, accountId);
+          setGetAccountResponse(res);
+        }}
+      >
+        Send
+      </Button>
+      <ResponseAccordian body={getAccountResponse}/>
     </div>
   );
 }

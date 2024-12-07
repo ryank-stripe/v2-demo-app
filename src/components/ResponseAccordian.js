@@ -11,7 +11,7 @@ import Fade from '@mui/material/Fade';
 import JSONPretty from 'react-json-pretty';
 
 export function ResponseAccordian(props) {
-    const [expanded, setExpanded] = React.useState(false);
+    const [expanded, setExpanded] = React.useState(true);
 
     const handleExpansion = () => {
       setExpanded((prevExpanded) => !prevExpanded);
@@ -24,25 +24,25 @@ export function ResponseAccordian(props) {
             slots={{ transition: Fade }}
             slotProps={{ transition: { timeout: 400 } }}
             sx={[
-            expanded
-                ? {
-                    [`& .${accordionClasses.region}`]: {
-                    height: 'auto',
+                expanded
+                    ? {
+                        [`& .${accordionClasses.region}`]: {
+                        height: 'auto',
+                        },
+                        [`& .${accordionDetailsClasses.root}`]: {
+                        display: 'block',
+                        },
+                    }
+                    : {
+                        [`& .${accordionClasses.region}`]: {
+                        height: 0,
+                        },
+                        [`& .${accordionDetailsClasses.root}`]: {
+                        display: 'none',
+                        },
                     },
-                    [`& .${accordionDetailsClasses.root}`]: {
-                    display: 'block',
-                    },
-                }
-                : {
-                    [`& .${accordionClasses.region}`]: {
-                    height: 0,
-                    },
-                    [`& .${accordionDetailsClasses.root}`]: {
-                    display: 'none',
-                    },
-                },
-            ]}
-            defaultExpanded
+                ]
+            }
         >
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
