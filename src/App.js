@@ -1,4 +1,5 @@
 import './App.css';
+import JSONPretty from 'react-json-pretty';
 
 import {useState} from 'react';
 
@@ -24,6 +25,7 @@ function App() {
     <div style={{
       padding: '3rem'
     }}>
+      <h1>Enter your Stripe Secret Key from Sandbox</h1>
       <TextField
         id="outlined-basic"
         label="Stripe Key"
@@ -58,11 +60,8 @@ function App() {
       >
         Send
       </Button>
-      <div
-        style={{whiteSpace: 'pre-wrap'}}
-      >
-        {JSON.stringify(createAccountResponse, null, 2)}
-      </div>
+      <h2>Response</h2>
+      <JSONPretty id="json-pretty" data={createAccountResponse}></JSONPretty>
 
       <h1>Update Account with Customer Config</h1>
 
@@ -98,11 +97,8 @@ function App() {
       >
         Send
       </Button>
-      <div
-        style={{whiteSpace: 'pre-wrap'}}
-      >
-        {JSON.stringify(addCustomerConfigResponse, null, 2)}
-      </div>
+      <h2>Response</h2>
+      <JSONPretty id="json-pretty" data={addCustomerConfigResponse}></JSONPretty>
     </div>
   );
 }
