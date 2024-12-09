@@ -49,6 +49,7 @@ function App() {
       />
 
       <h1>Create your first account</h1>
+      <h4>POST https://api.stripe.com/v2/core/accounts</h4>
       <TextField
         id="outlined-multiline-static"
         label="Multiline"
@@ -75,6 +76,7 @@ function App() {
       <ResponseAccordian body={createAccountResponse}/>
 
       <h1>Get Account Details</h1>
+      <h4>{`GET https://api.stripe.com/v2/core/accounts/${accountId}`}</h4>
       <Button
         variant="contained"
         endIcon={<SendIcon />}
@@ -89,7 +91,7 @@ function App() {
       <ResponseAccordian body={getAccountResponse}/>
 
       <h1>Update Account with Customer Config</h1>
-
+      <h4>{`POST https://api.stripe.com/v2/core/accounts/${accountId}`}</h4>
       <TextField
         id="outlined-basic"
         label="Stripe Account ID"
@@ -129,7 +131,7 @@ function App() {
       <ResponseAccordian body={addCustomerConfigResponse}/>
 
       <h1>Update Account with Merchant Config</h1>
-
+      <h4>{`POST https://api.stripe.com/v2/core/accounts/${accountId}`}</h4>
       <TextField
         id="outlined-multiline-static"
         label="Multiline"
@@ -158,7 +160,7 @@ function App() {
       <ResponseAccordian body={addMerchantConfigResponse}/>
 
       <h1>Update Account with Recipient Config</h1>
-
+      <h4>{`POST https://api.stripe.com/v2/core/accounts/${accountId}`}</h4>
       <TextField
         id="outlined-multiline-static"
         label="Multiline"
@@ -187,6 +189,7 @@ function App() {
       <ResponseAccordian body={addRecipientConfigResponse}/>
 
       <h1>Delete Account</h1>
+      <h4>{`POST https://api.stripe.com/v2/core/accounts/${accountId}/close`}</h4>
       <Button
         variant="contained"
         endIcon={<SendIcon />}
