@@ -6,8 +6,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
-import { createAccount, addCustomerConfig, addMerchantConfig } from './requests';
-import { postCreateAccount, postUpdateAccount, getAccount } from './axios';
+import { createAccount, addCustomerConfig, addMerchantConfig, addRecipientConfig } from './requests';
+import { postCreateAccount, postUpdateAccount, getAccount, deleteAccount } from './axios';
 
 import { ResponseAccordian } from './components/ResponseAccordian';
 
@@ -17,15 +17,20 @@ function App() {
   const [accountId, setAccountId] = useState('');
 
   const [createAccountRequest, setCreateAccountRequest] = useState(JSON.stringify(createAccount, null, 2));
-  const [createAccountResponse, setCreateAccountResponse] = useState({});
+  const [createAccountResponse, setCreateAccountResponse] = useState();
 
   const [addCustomerConfigRequest, setAddCustomerConfigRequest] = useState(JSON.stringify(addCustomerConfig, null, 2));
-  const [addCustomerConfigResponse, setAddCustomerConfigResponse] = useState({});
+  const [addCustomerConfigResponse, setAddCustomerConfigResponse] = useState();
 
   const [addMerchantConfigRequest, setAddMerchantConfigRequest] = useState(JSON.stringify(addMerchantConfig, null, 2));
-  const [addMerchantConfigResponse, setAddMerchantConfigResponse] = useState({});
+  const [addMerchantConfigResponse, setAddMerchantConfigResponse] = useState();
 
-  const [getAccountResponse, setGetAccountResponse] = useState({});
+  const [getAccountResponse, setGetAccountResponse] = useState();
+
+  const [addRecipientConfigRequest, setAddRecipientConfigRequest] = useState(JSON.stringify(addRecipientConfig, null, 2));
+  const [addRecipientConfigResponse, setAddRecipientConfigResponse] = useState();
+
+  const [deleteAccountResponse, setDeleteAccountResponse] = useState();
 
   return (
     <div style={{
@@ -59,6 +64,7 @@ function App() {
         variant="contained"
         endIcon={<SendIcon />}
         onClick={async () => {
+          setCreateAccountResponse(null);
           const res = await postCreateAccount(createAccountRequest, stripeKey);
           setCreateAccountResponse(res);
           setAccountId(res.id);
@@ -67,6 +73,20 @@ function App() {
         Send
       </Button>
       <ResponseAccordian body={createAccountResponse}/>
+
+      <h1>Get Account Details</h1>
+      <Button
+        variant="contained"
+        endIcon={<SendIcon />}
+        onClick={async () => {
+          setGetAccountResponse(null);
+          const res = await getAccount(stripeKey, accountId);
+          setGetAccountResponse(res);
+        }}
+      >
+        Send
+      </Button>
+      <ResponseAccordian body={getAccountResponse}/>
 
       <h1>Update Account with Customer Config</h1>
 
@@ -99,6 +119,7 @@ function App() {
         variant="contained"
         endIcon={<SendIcon />}
         onClick={async () => {
+          setAddCustomerConfigResponse(null);
           const res = await postUpdateAccount(addCustomerConfigRequest, stripeKey, accountId);
           setAddCustomerConfigResponse(res);
         }}
@@ -127,6 +148,7 @@ function App() {
         variant="contained"
         endIcon={<SendIcon />}
         onClick={async () => {
+          setAddMerchantConfigResponse(null);
           const res = await postUpdateAccount(addMerchantConfigRequest, stripeKey, accountId);
           setAddMerchantConfigResponse(res);
         }}
@@ -135,18 +157,48 @@ function App() {
       </Button>
       <ResponseAccordian body={addMerchantConfigResponse}/>
 
-      <h1>Get Account Details</h1>
+      <h1>Update Account with Recipient Config</h1>
+
+      <TextField
+        id="outlined-multiline-static"
+        label="Multiline"
+        fullWidth
+        multiline
+        rows={30}
+        style={{
+          marginTop: '2rem'
+        }}
+        defaultValue={addRecipientConfigRequest}
+        onChange={(event) => {
+          setAddRecipientConfigRequest(event.target.value);
+        }}
+      />
       <Button
         variant="contained"
         endIcon={<SendIcon />}
         onClick={async () => {
-          const res = await getAccount(stripeKey, accountId);
-          setGetAccountResponse(res);
+          setAddRecipientConfigResponse(null);
+          const res = await postUpdateAccount(addRecipientConfigRequest, stripeKey, accountId);
+          setAddRecipientConfigResponse(res);
         }}
       >
         Send
       </Button>
-      <ResponseAccordian body={getAccountResponse}/>
+      <ResponseAccordian body={addRecipientConfigResponse}/>
+
+      <h1>Delete Account</h1>
+      <Button
+        variant="contained"
+        endIcon={<SendIcon />}
+        onClick={async () => {
+          setDeleteAccountResponse(null);
+          const res = await deleteAccount(stripeKey, accountId);
+          setDeleteAccountResponse(res);
+        }}
+      >
+        Send
+      </Button>
+      <ResponseAccordian body={deleteAccountResponse}/>
     </div>
   );
 }

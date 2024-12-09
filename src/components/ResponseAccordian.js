@@ -6,6 +6,7 @@ import AccordionDetails, { accordionDetailsClasses } from '@mui/material/Accordi
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 import Fade from '@mui/material/Fade';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 import JSONPretty from 'react-json-pretty';
@@ -52,7 +53,11 @@ export function ResponseAccordian(props) {
                 <Typography>Response</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                <JSONPretty id="json-pretty" data={props.body}></JSONPretty>
+                {
+                    props.body !== null
+                        ? <JSONPretty id="json-pretty" data={props.body}></JSONPretty>
+                        : <CircularProgress />
+                }
             </AccordionDetails>
         </Accordion>
     )

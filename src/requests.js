@@ -37,3 +37,20 @@ export const addMerchantConfig = {
         }
     }
 }
+
+export const addRecipientConfig = {
+    "include": [
+        "identity","requirements"
+    ],
+    "configuration": {
+        "recipient": {
+            "features": {
+                "stripe_balance": {
+                    "stripe_transfers": {
+                        "requested": true
+                    }
+                }
+            }
+        }
+    }
+  }
