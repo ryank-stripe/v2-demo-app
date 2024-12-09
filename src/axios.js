@@ -16,7 +16,7 @@ export const postCreateAccount = async (body, token) => {
             return response.data;
         })
         .catch(function (error) {
-            console.log(error);
+            return error.response.data;
         });
 }
 
@@ -26,7 +26,7 @@ export const getAccount = async (token, accountId) => {
             return response.data;
         })
         .catch(function (error) {
-            console.log(error);
+            return error.response.data;
         });
 }
 
@@ -36,7 +36,7 @@ export const postUpdateAccount = async (body, token, accountId) => {
             return response.data;
         })
         .catch(function (error) {
-            console.log(error);
+            return error.response.data;
         });
 }
 
@@ -46,6 +46,6 @@ export const deleteAccount = async (token, accountId) => {
             return response.data;
         })
         .catch(function (error) {
-            console.log(error);
+            return error.response.data;
         });
 }
