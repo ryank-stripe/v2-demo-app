@@ -74,6 +74,19 @@ function App() {
         Send
       </Button>
       <ResponseAccordian body={createAccountResponse}/>
+      
+      <h1>Your New Account's ID</h1>
+      <h4>Auto-set after account creation</h4>
+      <TextField
+        id="outlined-basic"
+        label="Stripe Account ID"
+        variant="outlined"
+        fullWidth
+        value={accountId}
+        onChange={(event) => {
+          setAccountId(event.target.value);
+        }}
+      />
 
       <h1>Get Account Details</h1>
       <h4>{`GET https://api.stripe.com/v2/core/accounts/${accountId}`}</h4>
@@ -92,16 +105,6 @@ function App() {
 
       <h1>Update Account with Customer Config</h1>
       <h4>{`POST https://api.stripe.com/v2/core/accounts/${accountId}`}</h4>
-      <TextField
-        id="outlined-basic"
-        label="Stripe Account ID"
-        variant="outlined"
-        fullWidth
-        value={accountId}
-        onChange={(event) => {
-          setAccountId(event.target.value);
-        }}
-      />
 
       <TextField
         id="outlined-multiline-static"
