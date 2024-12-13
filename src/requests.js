@@ -24,7 +24,7 @@ export const addSubscription = {
 }
 
 export const createAccount = {
-    "display_name": "Acme",
+    "display_name": "SliceOPie",
     "contact_email": "contact@test.com",
     "identity": {
         "country": "us",
@@ -43,8 +43,15 @@ export const addCustomerConfig = {
 
 export const addMerchantConfig = {
     "include": [
-        "identity","requirements"
+        "identity",
+        "configuration.merchant",
+        "requirements"
     ],
+    "identity": {
+      "business_details": {
+        "registered_name": "SliceOPie"
+      }
+    },
     "configuration": {
         "merchant": {
             "features": {
@@ -65,7 +72,8 @@ export const addMerchantConfig = {
 
 export const addRecipientConfig = {
     "include": [
-        "identity","requirements"
+        "identity",
+        "configuration.recipient"
     ],
     "configuration": {
         "recipient": {
@@ -78,4 +86,47 @@ export const addRecipientConfig = {
             }
         }
     }
-  }
+}
+
+export const createEntireAccount = {
+    "contact_email": "bestpizza@test.com",
+    "display_name": "Best Pizza",
+    "dashboard": "none",
+    "identity": {
+        "country": "US",
+        "entity_type": "company",
+        "business_details": {
+          "registered_name": "Best Pizza"
+        }
+    },
+    "configuration": {
+        "customer": {
+            "shipping": {
+                "phone": "+12345678901",
+                "name": "Best Pizza"
+            }
+        },
+        "merchant": {
+          "features" : {
+            "card_payments": {
+              "requested": true
+            }
+          }
+       }
+    },
+    "defaults": {
+        "currency": "usd",
+        "responsibilities": {
+            "fees_collector": "stripe",
+            "losses_collector": "stripe"
+        },
+        "locales": [
+            "en-US"
+        ]
+    },
+    "include": [
+        "configuration.customer",
+        "configuration.merchant",
+        "identity"
+    ]
+}

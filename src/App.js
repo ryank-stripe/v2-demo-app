@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
-import { createAccount, addCustomerConfig, addMerchantConfig, addRecipientConfig, createProduct, setPrice, addPaymentMethod, addSubscription } from './requests';
+import { createAccount, addCustomerConfig, addMerchantConfig, addRecipientConfig, createProduct, setPrice, addPaymentMethod, addSubscription, createEntireAccount } from './requests';
 import { postCreateAccount, postUpdateAccount, getAccount, deleteAccount, postProduct, postPrice, postPaymentMethod, postSubscription } from './axios';
 
 import { ResponseAccordian } from './components/ResponseAccordian';
@@ -44,6 +44,9 @@ function App() {
 
   const [addRecipientConfigRequest, setAddRecipientConfigRequest] = useState(JSON.stringify(addRecipientConfig, null, 2));
   const [addRecipientConfigResponse, setAddRecipientConfigResponse] = useState();
+
+  const [createEntireAccountRequest, setCreateEntireAccountRequest] = useState(JSON.stringify(createEntireAccount, null, 2));
+  const [createEntireAccountResponse, setCreateEntireAccountResponse] = useState();
 
   const [deleteAccountResponse, setDeleteAccountResponse] = useState();
 
@@ -352,20 +355,30 @@ function App() {
       </Button>
       <ResponseAccordian body={addRecipientConfigResponse}/>
 
-      <h2>Delete Account</h2>
-      <h4>{`POST https://api.stripe.com/v2/core/accounts/${accountId}/close`}</h4>
+      <h2>Create an Account v2 with a customer and merchant configuration in one call</h2>
+      <h4>POST https://api.stripe.com/v2/core/accounts</h4>
+      <TextField
+        id="outlined-multiline-static"
+        fullWidth
+        multiline
+        rows={45}
+        defaultValue={createEntireAccountRequest}
+        onChange={(event) => {
+          setCreateEntireAccountRequest(event.target.value);
+        }}
+      />
       <Button
         variant="contained"
         endIcon={<SendIcon />}
         onClick={async () => {
-          setDeleteAccountResponse(null);
-          const res = await deleteAccount(stripeKey, accountId);
-          setDeleteAccountResponse(res);
+          setCreateEntireAccountResponse(null);
+          const res = await postCreateAccount(createEntireAccountRequest, stripeKey);
+          setCreateEntireAccountResponse(res);
         }}
       >
         Send
       </Button>
-      <ResponseAccordian body={deleteAccountResponse}/>
+      <ResponseAccordian body={createEntireAccountResponse}/>
     </div>
   );
 }
